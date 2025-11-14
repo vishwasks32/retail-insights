@@ -13,8 +13,9 @@ class Settings:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(Settings, cls).__new__(cls)
-            cls._instance.env = os.getenv('APP_ENV', 'dev')
-            cls._instance.db_uri = cls._instance._get_db_uri()
+        # Always update from environment on each instantiation
+        cls._instance.env = os.getenv('APP_ENV', 'dev')
+        cls._instance.db_uri = cls._instance._get_db_uri()
         return cls._instance
 
     def _get_db_uri(self):

@@ -37,9 +37,24 @@ def run_etl(input_csv, output_path):
     print(f"ETL completed. Output saved to {output_path}")
     return True
 
-if __name__ == "__main__":
+def main():
     # Always use the correct absolute path for raw and processed data
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-    input_csv = os.path.join(base_dir, 'data', 'raw', 'customers.csv')
-    output_path = os.path.join(base_dir, 'data', 'processed', 'customers_processed.csv')
-    run_etl(input_csv, output_path)
+
+    # Customers ETL
+    input_customers = os.path.join(base_dir, 'data', 'raw', 'customers.csv')
+    output_customers = os.path.join(base_dir, 'data', 'processed', 'customers_processed.csv')
+    run_etl(input_customers, output_customers)
+
+    # Products ETL
+    input_products = os.path.join(base_dir, 'data', 'raw', 'products.csv')
+    output_products = os.path.join(base_dir, 'data', 'processed', 'products_processed.csv')
+    run_etl(input_products, output_products)
+
+    # Orders ETL
+    input_orders = os.path.join(base_dir, 'data', 'raw', 'orders.csv')
+    output_orders = os.path.join(base_dir, 'data', 'processed', 'orders_processed.csv')
+    run_etl(input_orders, output_orders)
+
+if __name__ == "__main__":
+    main()

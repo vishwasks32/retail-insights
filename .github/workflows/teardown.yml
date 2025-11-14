@@ -1,0 +1,30 @@
+name: Teardown AWS ECS Resources
+
+on:
+  workflow_dispatch:
+
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_REGION: ${{ secrets.AWS_REGION }}
+
+jobs:
+  teardown:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Delete ECS Service
+        run: |
+          aws ecs update-service --cluster retail-insights-cluster --service retail-insights-service --desired-count 0
+          aws ecs delete-service --cluster retail-insights-cluster --service retail-insights-service --force
+
+      - name: Delete ECS Task Definition
+        run: |
+          TASK_DEF_ARN=$(aws ecs describe-task-definition --task-definition retail-insights-task --query 'taskDefinition.taskDefinitionArn' --output text)
+          aws ecs deregister-task-definition --task-definition $TASK_DEF_ARN
