@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retail-insights
+  labels:
+    app: retail-insights
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: retail-insights
+  template:
+    metadata:
+      labels:
+        app: retail-insights
+    spec:
+      containers:
+        - name: retail-insights
+          image: <AWS_ACCOUNT_ID>.dkr.ecr.<AWS_REGION>.amazonaws.com/retail-insights:latest
+          ports:
+            - containerPort: 8501
+          envFrom:
+            - secretRef:
+                name: retail-insights-secrets
+            - configMapRef:
+                name: retail-insights-config
+          volumeMounts:
+            - name: data-volume
+              mountPath: /app/data
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim:
+            claimName: retail-insights-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: retail-insights-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8501
+  selector:
+    app: retail-insights

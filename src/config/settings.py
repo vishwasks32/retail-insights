@@ -27,7 +27,9 @@ class Settings:
         elif self.env == 'prod':
             # Use MySQL for prod, fetch credentials from AWS Secrets Manager
             secret_name = os.getenv('MYSQL_SECRET_NAME', 'prod/mysql/credentials')
-            region_name = os.getenv('AWS_REGION', 'us-east-1')
+            region_name = os.getenv('AWS_REGION')
+            if not region_name:
+                raise Exception('AWS_REGION environment variable must be set for production')
             creds = self._get_mysql_credentials_from_aws(secret_name, region_name)
             if creds:
                 return f"mysql+pymysql://{creds['username']}:{creds['password']}@{creds['host']}:{creds['port']}/{creds['dbname']}"
