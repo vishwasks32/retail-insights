@@ -41,6 +41,7 @@ jobs:
 
       - name: Build and push Docker image
         env:
+          aws-region: ${{ secrets.AWS_REGION }}
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: retail-insights
           IMAGE_TAG: latest
