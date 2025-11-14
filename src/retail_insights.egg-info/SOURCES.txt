@@ -1,0 +1,8 @@
+README.md
+setup.py
+src/retail_insights.egg-info/PKG-INFO
+src/retail_insights.egg-info/SOURCES.txt
+src/retail_insights.egg-info/dependency_links.txt
+src/retail_insights.egg-info/entry_points.txt
+src/retail_insights.egg-info/requires.txt
+src/retail_insights.egg-info/top_level.txt

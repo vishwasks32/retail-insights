@@ -1,0 +1,2 @@
+[console_scripts]
+retail-insights = app.streamlit_app:main

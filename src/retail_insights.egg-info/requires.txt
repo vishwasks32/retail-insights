@@ -1,0 +1,6 @@
+streamlit
+pandas
+sqlalchemy
+boto3
+python-dotenv
+python-decouple

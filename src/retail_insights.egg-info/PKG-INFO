@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: retail_insights
+Version: 0.1.0
+Requires-Dist: streamlit
+Requires-Dist: pandas
+Requires-Dist: sqlalchemy
+Requires-Dist: boto3
+Requires-Dist: python-dotenv
+Requires-Dist: python-decouple
+Dynamic: requires-dist
