@@ -19,5 +19,7 @@ EXPOSE 8501
 # Set environment variables (override as needed)
 ENV APP_ENV=prod
 
+ENV MYSQL_SECRET_NAME=qa/app/mysql
+
 # Run Streamlit app using the installed package entry point
 CMD ["streamlit", "run", "src/app/streamlit_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
